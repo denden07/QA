@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Question;
+use Illuminate\Support\Facades\DB;
 
 class QuestionsController extends Controller
 {
@@ -16,9 +17,12 @@ class QuestionsController extends Controller
     {
         //
 
-        $questions = Question::latest()->paginate(5);
 
-        return view('questions.index',compact('questions'));
+        $questions = Question::with('user')->latest()->paginate(5);
+
+     return view('questions.index',compact('questions'));
+
+
     }
 
     /**
