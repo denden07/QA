@@ -79,6 +79,10 @@ class QuestionsController extends Controller
     public function edit($id)
     {
         //
+        $questions =Question::findOrFail($id);
+
+        return view('questions.edit',compact('questions'));
+
     }
 
     /**
@@ -88,9 +92,15 @@ class QuestionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AskQuestionRequest $request, $id)
     {
         //
+        $questions = Question::findOrFail($id);
+
+        $questions->update($request->only('title','body'));
+
+        return redirect()->route('questions.index')->with('success',"Your question been updated");
+
     }
 
     /**
